@@ -8,16 +8,18 @@ Coin Change Problem
 Problem: Given coin denominations and a target amount, find the minimum number of coins needed (and which coins to use).
 
 Time Complexity: O(amount * number of coins)
-Space Complexity: O(amount)
+Space Complexity: O(amount) since we store arrays of size amount + 1
 Dynamic programming works here because the problem has
 -overlapping subproblems (we can reuse the same amounts)
 -optimal substructure (the most optimal solution is built from smaller best solutions)
 
 Solution:
-We create a table dp where each index dp[amount] is the minimum number of coins needed to make amount
-Starting from 0 we build up to amount
-For each amount we try all coins and take the most optimal set (the one with the minimum number of coins required)
-Also we keep track of what coins are used in a separate list
+We create a table dp where each index dp[amount] is the minimum number of coins needed to make each amount
+Starting from dp[0] (which takes 0 coins) we build up to dp[amount+1]
+For each i we try every coin, making sure it is valid (i - coin >= 0, making sure we don't go negative)
+Then check if adding another coin is more optimal than the current solution for i
+If it is, we update the dp and used tables to keep track of the new minimum coins and what coin was used in a separated "used" list
+Then we rebuild the set of used coins and return
 
 TEST CASES:
 
